@@ -6,6 +6,7 @@ function AuthButton() {
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
 
+  // refactor the below into components
   if (session) {
     return (
       <>
