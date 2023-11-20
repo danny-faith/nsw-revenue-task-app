@@ -1,10 +1,18 @@
+import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function ImageViewer() {
+export default async function ImageViewer() {
+  const session = await getServerSession();
+
+  if (!session || !session.user) {
+    redirect("/api/auth/signin");
+  }
+
   return (
     <div className={`${inter.className}`}>
       <p>Image viewer</p>
