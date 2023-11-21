@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   DEFAULT_PAGE_NUMBER,
   PAGE_LIMIT,
@@ -7,18 +7,20 @@ import {
 } from "../image-viewer/page";
 import { ImageBlock } from "./Image";
 import { Pagination } from "./Pagination";
+import { useQuery } from "react-query";
 
 function ImageList() {
-  const [images, setImages] = useState<PropsImage[]>([]);
   const [page, setPage] = useState<number>(DEFAULT_PAGE_NUMBER);
 
-  useEffect(() => {
+  const getImages = () =>
     fetch(`https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
       .then((res) => res.json())
-      .then((data) => {
-        if (data.length > 0) setImages(data);
-      });
-  }, [page]);
+      .then((data) => data);
+
+  const { data: images, isLoading } = useQuery<PropsImage[]>(
+    ["images", page],
+    getImages
+  );
 
   return (
     <div>
