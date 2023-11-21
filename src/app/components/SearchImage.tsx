@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { PropsImage } from "../image-viewer/page";
 import page from "../page";
+import { useImageListContext } from "../context/ImageListContext";
 
 function SearchImage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const { setSearchResults } = useImageListContext();
 
   function handleSearchTermOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
@@ -33,21 +35,29 @@ function SearchImage() {
     const res = images.filter((image) => {
       if (image.author.toLowerCase().includes(searchTerm)) return true;
     });
-    console.log("res", res);
+    // console.log("res", res);
     return res;
   }
 
   function handleSearchClearClick() {
     setSearchTerm("");
+    setSearchResults([]);
   }
 
-  function handleSearchTermKeyDown() {
-    handleSearchButtonClick();
+  function handleSearchTermKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.nativeEvent.code === "Enter") {
+      handleSearchButtonClick();
+    }
   }
 
   function handleSearchButtonClick() {
-    if (searchTerm.length < 1 || !images) return;
+    if (searchTerm.length < 1 || !images) {
+      return;
+    }
     const foundImages = findImagesByMetaData(searchTerm, "author", images);
+    if (foundImages.length > 0) {
+      setSearchResults(foundImages);
+    }
   }
 
   return (

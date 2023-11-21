@@ -1,13 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
-import { TOTAL_IMAGES, PAGE_LIMIT } from "../image-viewer/page";
+import {
+  PAGE_LIMIT,
+  TOTAL_IMAGES,
+  useImageListContext,
+} from "../context/ImageListContext";
 
-function Pagination({
-  setPage,
-  currentPage,
-}: {
-  currentPage: number;
-  setPage: Dispatch<SetStateAction<number>>;
-}) {
+function Pagination() {
+  const { page: currentPage, setPage } = useImageListContext();
   const pages = TOTAL_IMAGES / PAGE_LIMIT;
   const startAtOne = (_: number, i: number) => i + 1;
   const arrayOfTotalPageNumbers: number[] = Array.from(
