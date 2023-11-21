@@ -20,9 +20,10 @@ function Pagination({
   }
 
   function PageButtons() {
-    return arrayOfTotalPageNumbers.map((page) => {
+    return arrayOfTotalPageNumbers.map((page, i) => {
       return (
         <button
+          key={i}
           className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 ${
             currentPage === page ? "bg-blue-700" : ""
           }`}
