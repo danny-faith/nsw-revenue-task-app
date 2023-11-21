@@ -39,8 +39,6 @@ export default async function ImageViewer() {
     redirect("/api/auth/signin");
   }
 
-  const images: PropsImage[] = await getImageList();
-
   return (
     <div className={`${inter.className}`}>
       <p>Image viewer</p>
@@ -57,7 +55,7 @@ export default async function ImageViewer() {
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Return home</p>
         </Link>
-        <ImageList images={images} />
+        <ImageList />
       </div>
     </div>
   );
