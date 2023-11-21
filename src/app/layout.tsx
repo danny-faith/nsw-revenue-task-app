@@ -26,7 +26,7 @@ export default async function RootLayout({
         <ReactQueryProvider>
           <SessionProvider session={session}>
             <NavMenu />
-            {children}
+            <main className="py-10">{children}</main>
           </SessionProvider>
         </ReactQueryProvider>
       </body>
