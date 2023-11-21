@@ -15,9 +15,13 @@ function ImageList() {
   let imageContent;
 
   const getImages = () =>
-    fetch(`https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
+    fetch(`https://picsum.photoss/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
       .then((res) => res.json())
-      .then((data) => data);
+      .then((data) => data)
+      .catch((error) => {
+        console.error(error);
+        throw new Error(error);
+      });
 
   const { data: images, error } = useQuery<PropsImage[]>(
     ["images", page],
@@ -41,7 +45,12 @@ function ImageList() {
       </div>
     );
   } else if (error) {
-    imageContent = <p>ERORR</p>;
+    imageContent = (
+      <p className="text-red-500">
+        ERROR: there was an issue fetching image data. Please refresh and try
+        again.
+      </p>
+    );
   } else {
     imageContent = <Spinner />;
   }
