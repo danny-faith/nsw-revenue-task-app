@@ -8,6 +8,7 @@ import {
 import { ImageBlock } from "./Image";
 import { Pagination } from "./Pagination";
 import { useQuery } from "react-query";
+import { Spinner } from "./Spinner";
 
 function ImageList() {
   const [page, setPage] = useState<number>(DEFAULT_PAGE_NUMBER);
@@ -24,30 +25,30 @@ function ImageList() {
   );
 
   if (images) {
-    imageContent = images.map((image) => (
-      <ImageBlock
-        key={image.id}
-        id={image.id}
-        url={image.url}
-        author={""}
-        width={0}
-        height={0}
-        download_url={""}
-      />
-    ));
+    imageContent = (
+      <div className="grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        {images.map((image) => (
+          <ImageBlock
+            key={image.id}
+            id={image.id}
+            url={image.url}
+            author={""}
+            width={0}
+            height={0}
+            download_url={""}
+          />
+        ))}
+      </div>
+    );
   } else if (error) {
     imageContent = <p>ERORR</p>;
   } else {
-    imageContent = <p>LOADING</p>;
+    imageContent = <Spinner />;
   }
 
   return (
     <div>
-      <div className="flex justify-center mb-10">
-        <div className="grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          {imageContent}
-        </div>
-      </div>
+      <div className="flex justify-center mb-10">{imageContent}</div>
       <Pagination setPage={setPage} currentPage={page} />
     </div>
   );
