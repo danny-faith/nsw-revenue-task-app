@@ -1,10 +1,30 @@
 import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
-
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ImageBlock } from "../components/Image";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export type PropsImage = {
+  id: string;
+  author: string;
+  width: number;
+  height: number;
+  url: string;
+  download_url: string;
+};
+
+async function getImageList() {
+  const res = await fetch("https://picsum.photos/v2/list?page=0&limit=10");
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
 
 export default async function ImageViewer() {
   const session = await getServerSession();
@@ -12,6 +32,8 @@ export default async function ImageViewer() {
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
+
+  const images: PropsImage[] = await getImageList();
 
   return (
     <div className={`${inter.className}`}>
@@ -29,6 +51,17 @@ export default async function ImageViewer() {
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Return home</p>
         </Link>
+        {images &&
+          images.map((image) => (
+            <ImageBlock
+              id={image.id}
+              url={image.url}
+              author={""}
+              width={0}
+              height={0}
+              download_url={""}
+            />
+          ))}
       </div>
     </div>
   );
