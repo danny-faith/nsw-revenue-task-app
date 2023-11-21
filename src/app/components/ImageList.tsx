@@ -25,10 +25,12 @@ function ImageList() {
 
   const { data: images, error } = useQuery<PropsImage[]>(
     ["images", page],
-    getImages
+    getImages,
+    { keepPreviousData: true }
   );
+
   // to test image-viewer page error handling, uncomment the below error
-  // throw new Error("uh oh");
+  // throw new Error("An error");
 
   if (images) {
     imageContent = (
