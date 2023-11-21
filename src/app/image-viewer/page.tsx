@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ImageBlock } from "../components/Image";
+import { ImageList } from "../components/ImageList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +15,14 @@ export type PropsImage = {
   download_url: string;
 };
 
-async function getImageList() {
-  const res = await fetch("https://picsum.photos/v2/list?page=0&limit=10");
+export const DEFAULT_PAGE_NUMBER = 1;
+export const PAGE_LIMIT = 10;
+export const TOTAL_IMAGES = 100;
+
+async function getImageList(page: number = DEFAULT_PAGE_NUMBER) {
+  const res = await fetch(
+    `https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`
+  );
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -51,17 +57,7 @@ export default async function ImageViewer() {
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Return home</p>
         </Link>
-        {images &&
-          images.map((image) => (
-            <ImageBlock
-              id={image.id}
-              url={image.url}
-              author={""}
-              width={0}
-              height={0}
-              download_url={""}
-            />
-          ))}
+        <ImageList images={images} />
       </div>
     </div>
   );
