@@ -16,14 +16,14 @@ function AuthButton() {
     return (
       <div className="flex">
         <p className="px-3 py-2 text-sm font-medium text-gray-300 flex">
-          Welcome:
+          <span className="hidden md:block">Welcome:</span>
           {session?.user?.image && (
             <Image
               src={session?.user?.image}
               width={24}
               height={24}
               alt="User avatar"
-              className="rounded-full mx-2 -mt-1"
+              className="rounded-full mx-2 -mt-1 hidden md:block"
             />
           )}
           {session?.user?.name}
