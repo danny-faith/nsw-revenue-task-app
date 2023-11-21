@@ -15,7 +15,7 @@ function ImageList() {
   let imageContent;
 
   const getImages = () =>
-    fetch(`https://picsum.photoss/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
+    fetch(`https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
       .then((res) => res.json())
       .then((data) => data)
       .catch((error) => {
@@ -27,6 +27,8 @@ function ImageList() {
     ["images", page],
     getImages
   );
+  // to test image-viewer page error handling, uncomment the below error
+  // throw new Error("uh oh");
 
   if (images) {
     imageContent = (
