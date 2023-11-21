@@ -16,12 +16,17 @@ function Pagination({
   setPage: Dispatch<SetStateAction<number>>;
 }) {
   const pages = TOTAL_IMAGES / PAGE_LIMIT;
+  const startAtOne = (_: number, i: number) => i + 1;
+  const arrayOfTotalPageNumbers: number[] = Array.from(
+    { length: pages },
+    startAtOne
+  );
 
   function handlePaginationOnClick(page: number) {
     setPage(page);
   }
 
-  return Array.from({ length: pages }, (_, i) => i + 1).map((page) => {
+  return arrayOfTotalPageNumbers.map((page) => {
     return (
       <button
         className={`${currentPage === page ? "specialClass" : ""}`}
