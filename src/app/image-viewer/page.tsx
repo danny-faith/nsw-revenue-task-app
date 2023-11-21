@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ImageList } from "../components/ImageList";
+import { SearchImage } from "../components/SearchImage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,6 +55,7 @@ export default async function ImageViewer() {
         </h2>
         <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Return home</p>
       </Link>
+      <SearchImage />
       <ImageList />
     </div>
   );
