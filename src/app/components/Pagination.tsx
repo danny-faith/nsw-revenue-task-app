@@ -42,9 +42,9 @@ function Pagination() {
   }
 
   return (
-    <div className="flex justify-center">
+    <nav role="pagination" className="flex justify-center">
       <PageButtons />
-    </div>
+    </nav>
   );
 }
 

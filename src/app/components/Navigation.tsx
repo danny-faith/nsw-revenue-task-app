@@ -49,7 +49,7 @@ function AuthButton() {
   // TODO: refactor the below into components if time permits
   if (session) {
     return (
-      <div className="flex">
+      <header className="flex">
         <p className="px-3 py-2 text-sm font-medium text-gray-300 flex">
           <span className="hidden md:block">Welcome:</span>
           {session?.user?.image && (
@@ -66,7 +66,7 @@ function AuthButton() {
         <button className={linkClassesInactive} onClick={handleSignOutClick}>
           Sign out
         </button>
-      </div>
+      </header>
     );
   }
   return (
@@ -83,10 +83,10 @@ function AuthButton() {
 
 export default function NavMenu() {
   return (
-    <div className="bg-slate-500 p-2 flex justify-center">
+    <nav className="bg-slate-500 p-2 flex justify-center">
       <Links links={links} />
       <p className="px-3 py-2 text-sm font-medium text-gray-300">|</p>
       <AuthButton />
-    </div>
+    </nav>
   );
 }
