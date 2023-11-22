@@ -4,15 +4,49 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const classNames =
+const linkClassesInactive =
   "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
+
+const linkClassesActive = `${linkClassesInactive} bg-gray-900 text-white`;
+
+type PropsLinks = {
+  pathname: string;
+  label: string;
+};
+
+const links: PropsLinks[] = [
+  {
+    pathname: "/",
+    label: "Home",
+  },
+  {
+    pathname: "/image-viewer",
+    label: "Image viewer",
+  },
+];
+
+function Links({ links }: { links: PropsLinks[] }) {
+  const currentPathname = usePathname();
+
+  return links.map(({ label, pathname }, i) => (
+    <Link
+      className={
+        currentPathname === pathname ? linkClassesActive : linkClassesInactive
+      }
+      key={i}
+      href={pathname}
+    >
+      {label}
+    </Link>
+  ));
+}
 
 function AuthButton() {
   const { data: session } = useSession();
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
 
-  // refactor the below into components
+  // TODO: refactor the below into components if time permits
   if (session) {
     return (
       <div className="flex">
@@ -29,7 +63,7 @@ function AuthButton() {
           )}
           {session?.user?.name}
         </p>
-        <button className={classNames} onClick={handleSignOutClick}>
+        <button className={linkClassesInactive} onClick={handleSignOutClick}>
           Sign out
         </button>
       </div>
@@ -40,7 +74,7 @@ function AuthButton() {
       <p className="px-3 py-2 text-sm font-medium text-gray-300">
         Not signed in
       </p>
-      <button className={classNames} onClick={handleSignInClick}>
+      <button className={linkClassesInactive} onClick={handleSignInClick}>
         Sign in
       </button>
     </div>
@@ -48,26 +82,9 @@ function AuthButton() {
 }
 
 export default function NavMenu() {
-  const pathname = usePathname();
-
   return (
     <div className="bg-slate-500 p-2 flex justify-center">
-      <Link
-        className={`${classNames} ${
-          pathname === "/" ? "bg-gray-900 text-white" : ""
-        }`}
-        href="/"
-      >
-        Home
-      </Link>
-      <Link
-        className={`${classNames} ${
-          pathname === "/image-viewer" ? "bg-gray-900 text-white" : ""
-        }`}
-        href="/image-viewer"
-      >
-        Image viewer
-      </Link>
+      <Links links={links} />
       <p className="px-3 py-2 text-sm font-medium text-gray-300">|</p>
       <AuthButton />
     </div>
