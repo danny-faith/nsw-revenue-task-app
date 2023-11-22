@@ -55,7 +55,7 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
     { keepPreviousData: true }
   );
   const images = searchResults.length > 0 ? searchResults : standardImages;
-  console.log("the images", images);
+
   const value = {
     page,
     setPage,
