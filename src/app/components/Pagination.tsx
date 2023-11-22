@@ -5,11 +5,19 @@ import {
 } from "../context/ImageListContext";
 
 function Pagination() {
-  const { page: currentPage, setPage } = useImageListContext();
-  const pages = TOTAL_IMAGES / PAGE_LIMIT;
+  const {
+    page: currentPage,
+    setPage,
+    searchResults, // this shouldn't be passed as a prop. Ideally I would pass a number representing the total number of images rather than deriving it from searchResults
+  } = useImageListContext();
+  const pages =
+    searchResults.length > 0
+      ? searchResults.length / PAGE_LIMIT
+      : TOTAL_IMAGES / PAGE_LIMIT;
+
   const startAtOne = (_: number, i: number) => i + 1;
   const arrayOfTotalPageNumbers: number[] = Array.from(
-    { length: pages },
+    { length: Math.ceil(pages) },
     startAtOne
   );
 

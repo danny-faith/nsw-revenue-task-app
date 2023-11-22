@@ -18,6 +18,7 @@ type PropsImageListContext = {
   error: unknown;
   images: PropsImage[] | undefined;
   setSearchResults: Dispatch<SetStateAction<PropsImage[]>>;
+  searchResults: PropsImage[];
 };
 
 const imageContextDefaultValues = {
@@ -26,7 +27,16 @@ const imageContextDefaultValues = {
   images: [],
   error: undefined,
   setSearchResults: () => {},
+  searchResults: [],
 };
+
+function paginate(payload: PropsImage[], chunkSize = 10) {
+  let paginated = [];
+  for (let i = 0; i < payload.length; i += chunkSize) {
+    paginated.push(payload.slice(i, i + chunkSize));
+  }
+  return paginated;
+}
 
 const ImageListContext = createContext<PropsImageListContext>(
   imageContextDefaultValues
@@ -49,12 +59,20 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
         throw new Error(error);
       });
 
+  // TODO: below React query hook needs to be smarter and not refetch data when pagination is being used for search results
   const { data: standardImages, error } = useQuery<PropsImage[]>(
     ["images", page],
     getImages,
     { keepPreviousData: true }
   );
-  const images = searchResults.length > 0 ? searchResults : standardImages;
+
+  let images;
+  if (searchResults.length > 0) {
+    const paginatedSearchResults = paginate(searchResults, 10);
+    images = paginatedSearchResults[page - 1];
+  } else {
+    images = standardImages;
+  }
 
   const value = {
     page,
@@ -62,6 +80,7 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
     images,
     error,
     setSearchResults,
+    searchResults,
   };
 
   return (
