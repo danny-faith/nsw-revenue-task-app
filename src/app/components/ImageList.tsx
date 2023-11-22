@@ -1,5 +1,5 @@
 "use client";
-import { ImageBlock } from "./Image";
+import { ImageBlock } from "./ImageBlock";
 import { Pagination } from "./Pagination";
 import { Spinner } from "./Spinner";
 import { useImageListContext } from "../context/ImageListContext";
