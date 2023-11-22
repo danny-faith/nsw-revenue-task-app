@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 export default function ImageViewer() {
   const session = useSession();
 
-  if (!session) {
+  if (session.status === "unauthenticated") {
     redirect("/api/auth/signin");
   }
 
