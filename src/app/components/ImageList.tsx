@@ -13,7 +13,7 @@ function ImageList() {
 
   if (images) {
     imageContent = (
-      <div className="grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+      <div className="grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 md:grid-cols-3 lg:text-left">
         {images.map(({ author, id, url, width, height, download_url }) => (
           <ImageBlock
             key={id}
