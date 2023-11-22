@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import page from "../page";
 import { useImageListContext } from "../context/ImageListContext";
+import { findImagesByMetaData } from "../utils/utils";
 
 function SearchImage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -25,18 +26,6 @@ function SearchImage() {
     ["images", page],
     getImages
   );
-
-  function findImagesByMetaData(
-    searchTerm: string,
-    key: string,
-    images: PropsImage[]
-  ) {
-    const res = images.filter((image) => {
-      if (image.author.toLowerCase().includes(searchTerm)) return true;
-    });
-    // console.log("res", res);
-    return res;
-  }
 
   function handleSearchClearClick() {
     setSearchTerm("");
