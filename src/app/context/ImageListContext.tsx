@@ -68,7 +68,7 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
 
   let images;
   if (searchResults.length > 0) {
-    const paginatedSearchResults = paginate(searchResults, 10);
+    const paginatedSearchResults = paginate(searchResults, PAGE_LIMIT);
     images = paginatedSearchResults[page - 1];
   } else {
     images = standardImages;
