@@ -5,15 +5,6 @@ import { SearchImage } from "../components/SearchImage";
 import { ImageListProvider } from "../context/ImageListContext";
 import { useSession } from "next-auth/react";
 
-export type PropsImage = {
-  id: string;
-  author: string;
-  width: number;
-  height: number;
-  url: string;
-  download_url: string;
-};
-
 export default function ImageViewer() {
   const session = useSession();
 

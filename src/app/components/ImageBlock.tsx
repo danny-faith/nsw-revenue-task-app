@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { PropsImage } from "../image-viewer/page";
 import { CONST } from "../constants";
 
 interface PropsImageBlock extends PropsImage {

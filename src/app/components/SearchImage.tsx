@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { PropsImage } from "../image-viewer/page";
 import page from "../page";
 import { useImageListContext } from "../context/ImageListContext";
 

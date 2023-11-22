@@ -6,7 +6,6 @@ import {
   useContext,
   useState,
 } from "react";
-import { PropsImage } from "../image-viewer/page";
 import { useQuery } from "react-query";
 
 export const DEFAULT_PAGE_NUMBER = 1;
