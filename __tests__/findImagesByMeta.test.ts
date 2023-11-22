@@ -43,7 +43,38 @@ describe("findImagesByMeta", () => {
     });
   });
 
-  describe("seven matches", () => {
-    it.todo("should return an array seven items");
+  describe("three matches", () => {
+    it("should return an array three items", () => {
+      const res = findImagesByMetaData("Luke Chesser", "author", allImages);
+
+      const expected = [
+        {
+          id: "39",
+          author: "Luke Chesser",
+          width: 3456,
+          height: 2304,
+          url: "https://unsplash.com/photos/pFqrYbhIAXs",
+          download_url: "https://picsum.photos/id/39/3456/2304",
+        },
+        {
+          id: "42",
+          author: "Luke Chesser",
+          width: 3456,
+          height: 2304,
+          url: "https://unsplash.com/photos/KR2mdHJ5qMg",
+          download_url: "https://picsum.photos/id/42/3456/2304",
+        },
+        {
+          id: "48",
+          author: "Luke Chesser",
+          width: 5000,
+          height: 3333,
+          url: "https://unsplash.com/photos/1uxV8fAfhVM",
+          download_url: "https://picsum.photos/id/48/5000/3333",
+        },
+      ];
+
+      expect(res).toEqual(expected);
+    });
   });
 });
