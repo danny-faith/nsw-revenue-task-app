@@ -7,7 +7,7 @@ import { findImagesByMetaData } from "../utils/utils";
 
 function SearchImage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { setSearchResults } = useImageListContext();
+  const { setSearchResults, setPage } = useImageListContext();
 
   function handleSearchTermOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
@@ -45,6 +45,7 @@ function SearchImage() {
     const foundImages = findImagesByMetaData(searchTerm, "author", images);
     if (foundImages.length > 0) {
       setSearchResults(foundImages);
+      setPage(1);
     }
   }
 
