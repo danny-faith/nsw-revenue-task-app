@@ -2,6 +2,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const classNames =
   "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
@@ -47,12 +48,24 @@ function AuthButton() {
 }
 
 export default function NavMenu() {
+  const pathname = usePathname();
+
   return (
     <div className="bg-slate-500 p-2 flex justify-center">
-      <Link className={classNames} href="/">
+      <Link
+        className={`${classNames} ${
+          pathname === "/" ? "bg-gray-900 text-white" : ""
+        }`}
+        href="/"
+      >
         Home
       </Link>
-      <Link className={classNames} href="/image-viewer">
+      <Link
+        className={`${classNames} ${
+          pathname === "/image-viewer" ? "bg-gray-900 text-white" : ""
+        }`}
+        href="/image-viewer"
+      >
         Image viewer
       </Link>
       <p className="px-3 py-2 text-sm font-medium text-gray-300">|</p>
