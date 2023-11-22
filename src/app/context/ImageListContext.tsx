@@ -16,9 +16,10 @@ type PropsImageListContext = {
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
   error: unknown;
-  images: PropsImage[] | undefined;
+  images?: PropsImage[] | undefined;
   setSearchResults: Dispatch<SetStateAction<PropsImage[]>>;
   searchResults: PropsImage[];
+  unsplashData: Record<string, any>[];
 };
 
 const imageContextDefaultValues = {
@@ -28,6 +29,7 @@ const imageContextDefaultValues = {
   error: undefined,
   setSearchResults: () => {},
   searchResults: [],
+  unsplashData: [],
 };
 
 function paginate(payload: PropsImage[], chunkSize = 10) {
@@ -50,8 +52,21 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
   const [page, setPage] = useState<number>(imageContextDefaultValues.page);
   const [searchResults, setSearchResults] = useState<PropsImage[]>([]);
 
-  const getImages = () =>
-    fetch(`https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
+  // const getImages = () =>
+  //   fetch(`https://picsum.photos/v2/list?page=${page}&limit=${PAGE_LIMIT}`)
+  //     .then((res) => res.json())
+  //     .then((data) => data)
+  //     .catch((error) => {
+  //       console.error(error);
+  //       throw new Error(error);
+  //     });
+
+  const getImagesUnsplash = () =>
+    fetch(`https://api.unsplash.com/photos?page=${page}`, {
+      headers: {
+        Authorization: "Client-ID CumL8zxG-wE12FwBNXHCt8mU6AZ5uKeZOS1IQGD5DQs",
+      },
+    })
       .then((res) => res.json())
       .then((data) => data)
       .catch((error) => {
@@ -60,24 +75,32 @@ export function ImageListProvider({ children }: { children: React.ReactNode }) {
       });
 
   // TODO: below React query hook needs to be smarter and not refetch data when pagination is being used for search results
-  const { data: standardImages, error } = useQuery<PropsImage[]>(
-    ["images", page],
-    getImages,
+  // const { data: standardImages, error } = useQuery<PropsImage[]>(
+  //   ["images", page],
+  //   getImages,
+  //   { keepPreviousData: true }
+  // );
+
+  const { data: unsplashData = [], error } = useQuery<any[]>(
+    ["imagesUnsplash", page],
+    getImagesUnsplash,
     { keepPreviousData: true }
   );
+  console.log("imagesUnsplash", unsplashData);
 
-  let images;
-  if (searchResults.length > 0) {
-    const paginatedSearchResults = paginate(searchResults, PAGE_LIMIT);
-    images = paginatedSearchResults[page - 1];
-  } else {
-    images = standardImages;
-  }
+  // let images;
+  // if (searchResults.length > 0) {
+  //   const paginatedSearchResults = paginate(searchResults, PAGE_LIMIT);
+  //   images = paginatedSearchResults[page - 1];
+  // } else {
+  //   images = standardImages;
+  // }
 
   const value = {
     page,
     setPage,
-    images,
+    // images,
+    unsplashData,
     error,
     setSearchResults,
     searchResults,

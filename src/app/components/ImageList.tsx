@@ -6,23 +6,23 @@ import { useImageListContext } from "../context/ImageListContext";
 
 function ImageList() {
   let imageContent;
-  const { error, images } = useImageListContext();
+  const { error, images, unsplashData } = useImageListContext();
 
   // to test image-viewer page error handling, uncomment the below error
   // throw new Error("An error");
 
-  if (images) {
+  if (unsplashData) {
     imageContent = (
       <div className="grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 md:grid-cols-3 lg:text-left">
-        {images.map(({ author, id, url, width, height, download_url }) => (
+        {unsplashData.map(({ alt_description, urls, id, user }) => (
           <ImageBlock
             key={id}
             id={id}
-            url={url}
-            author={author}
-            width={width}
-            height={height}
-            download_url={download_url}
+            url={urls.thumb}
+            author={user.first_name}
+            width={5}
+            height={5}
+            download_url={"download_url"}
           />
         ))}
       </div>

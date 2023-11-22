@@ -11,6 +11,7 @@ function ImageBlock({
   author,
   height,
   width,
+  url,
   tWBackgroundColor = "bg-slate-800",
 }: PropsImageBlock) {
   return (
@@ -18,7 +19,7 @@ function ImageBlock({
       className={`p-2 m-1 border border-slate-400 shadow-lg shadow-black rounded ${tWBackgroundColor}`}
     >
       <Image
-        src={`https://picsum.photos/id/${id}/${CONST.IMAGE_PREVIEW_WIDTH}/${CONST.IMAGE_PREVIEW_HEIGHT}`}
+        src={url}
         alt={author}
         width={CONST.IMAGE_PREVIEW_WIDTH}
         height={CONST.IMAGE_PREVIEW_HEIGHT}
